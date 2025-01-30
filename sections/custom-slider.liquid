@@ -1,0 +1,90 @@
+<section class="textArea">
+  <h2 class="h1">{{ section.settings.title }}</h2>
+<p>{{ section.settings.subheading }}</p>
+{%- if section.settings.button_text != blank -%}
+                <a
+                  {% if section.settings.button_link == blank %}
+                    role="link" aria-disabled="true"
+                  {% else %}
+                    href="{{ section.settings.button_link }}"
+                  {% endif %}
+                  class="button button--primary"
+                >
+                  {{- section.settings.button_text | escape -}}
+                </a>
+              {%- endif -%}
+</section>
+
+<div class="custom-slider-section">
+    <div class="swiper mySwiperCustom">
+    <div class="swiper-wrapper">
+      {% for block in section.blocks %}      
+      <div class="swiper-slide">
+        <img src="{{ block.settings.image | img_url: 'master' }}" width="" height="" alt="Slide {{ forloop.index }}">      
+      </div>
+      {% endfor %}
+
+    </div>
+  
+    <div class="swiper-button-prevs">
+        <span class="svg-wrapperss">
+              {{- 'rightArrow.svg' | inline_asset_content -}}
+            </span>
+    </div>
+    <div class="swiper-pagination"></div>
+  </div>
+
+</div>
+
+
+
+{% schema %}
+{
+  "name": "Custom Slider",
+  "class": "section CustomSlider",
+  "settings": [
+    {
+      "type": "inline_richtext",
+      "id": "title",
+      "default": "Heading",
+      "label": "Heading"
+    },
+    {
+      "type": "text",
+      "id": "subheading",
+      "default": "Description",
+      "label": "Description"
+    },
+     {
+      "type": "text",
+      "id": "button_text",
+      "default": "Shop Now",
+      "label": "Shop Now"
+    },
+    {
+      "type": "url",
+      "id": "button_link",
+      "label": "Button Link"
+    }
+ ],
+  "blocks": [
+    {
+      "type": "image",
+      "name": "Slide",
+      "settings": [
+        {
+          "type": "image_picker",
+          "id": "image",
+          "label": "Slide Image"
+        }
+      ]
+    }
+  ],
+  "presets": [
+    {
+      "name": "Custom Slider",
+      "category": "Custom"
+    }
+  ]
+}
+{% endschema %}
